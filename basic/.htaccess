@@ -1,0 +1,48 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+
+# for GZIP Compression
+<IfModule deflate_module>
+	<IfModule filter_module>
+		AddOutputFilterByType DEFLATE text/plain text/html
+		AddOutputFilterByType DEFLATE text/xml application/xml application/xhtml+xml application/xml-dtd
+		AddOutputFilterByType DEFLATE application/rdf+xml application/rss+xml application/atom+xml image/svg+xml
+		AddOutputFilterByType DEFLATE text/css text/javascript application/javascript application/x-javascript
+		AddOutputFilterByType DEFLATE font/otf font/opentype application/font-otf application/x-font-otf
+		AddOutputFilterByType DEFLATE font/ttf font/truetype application/font-ttf application/x-font-ttf
+	</IfModule>
+</IfModule>
+
+# for browser caching
+<ifModule mod_headers.c>
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=43200"
+    </FilesMatch>
+    <FilesMatch "\.(js|css|txt|ttf|woff|svg)$">
+        Header set Cache-Control "max-age=604800"
+    </FilesMatch>
+    <FilesMatch "\.(flv|swf|ico|gif|jpg|jpeg|png|pdf)$">
+        Header set Cache-Control "max-age=2592000"
+    </FilesMatch>
+    <FilesMatch "\.(pl|php|cgi|spl|scgi|fcgi)$">
+        Header unset Cache-Control
+    </FilesMatch>
+</IfModule>
+
+<ifModule mod_headers.c>
+    <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+        Header unset ETag
+        FileETag None
+    </filesMatch>
+</ifModule>
